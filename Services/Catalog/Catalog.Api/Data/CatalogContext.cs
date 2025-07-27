@@ -9,9 +9,15 @@ public class CatalogContext:ICatalogContext
 
     public CatalogContext(IConfiguration builder)
     {
-        var client = new MongoClient(builder.GetValue<string>("ConnectionSetting:ConnectionString"));
-        var db=client.GetDatabase("ConnectionSetting:DBName");
-        Products = db.GetCollection<Product>("ConnectionSetting:Collection");
+        var connectionString = builder.GetValue<string>("ConnectionSetting:ConnectionString");
+        var dbName = builder.GetValue<string>("ConnectionSetting:DBName");
+        var collectionName = builder.GetValue<string>("ConnectionSetting:Collection");
+
+        var client = new MongoClient(connectionString);
+        var db = client.GetDatabase(dbName);
+        Products = db.GetCollection<Product>(collectionName);
+
+        
         CatalogContextSeed.SeedData(Products);
     }
 }
