@@ -8,6 +8,10 @@ services:
       - "27017:27017"
   catalog.api:
     container_name: catalog.api
+    environment:
+      - "ConnectionSetting:ConnectionString=mongodb://CatalogDb:27017"
+    depends_on: 
+      - catalogdb
     image: ${DOCKER_REGISTRY-}catalogapi
     build:
       context: .
