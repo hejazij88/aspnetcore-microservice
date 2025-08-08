@@ -1,0 +1,14 @@
+services:
+  catalogdb:
+    container_name: CatalogDb
+    restart: always
+    volumes:
+      - mongo_data:/data/db
+    ports:
+      - "27017:27017"
+  catalog.api:
+    container_name: catalog.api
+    image: ${DOCKER_REGISTRY-}catalogapi
+    build:
+      context: .
+      dockerfile: Services/Catalog/Catalog.Api/Dockerfile
