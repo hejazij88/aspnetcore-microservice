@@ -6,6 +6,12 @@ services:
     ports:
       - "27017:27017"
 
+  basketdb:
+    restart: always
+    ports: 
+      - "6379:6379"
+
+
   catalog.api:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
@@ -16,5 +22,23 @@ services:
     ports:
       - "8080:8080"
 
+
+  basket.api:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - "CacheSetting:ConnectionString=basketdb:6379"
+      - ASPNETCORE_HTTPS_PORTS=8081
+    ports:
+      - "8081:8081"
+    volumes:
+      - ${APPDATA}/Microsoft/UserSecrets:/home/app/.microsoft/usersecrets:ro
+      - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
+      - ${APPDATA}/ASP.NET/Https:/home/app/.aspnet/https:ro
+      - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro
+    depends_on: 
+     - basketdb
+
+
 volumes:
   mongo_data:
+

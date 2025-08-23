@@ -3,6 +3,10 @@ services:
     container_name: catalogdb
     image: mongo
 
+  basketdb:
+    container_name: basket.api
+    image: redis:alpine
+
   catalog.api:
     container_name: catalog.api
     image: ${DOCKER_REGISTRY-}catalogapi
@@ -10,4 +14,11 @@ services:
       context: .
       dockerfile: Services/Catalog/Catalog.Api/Dockerfile
 
+
+
+  basket.api:
+    image: ${DOCKER_REGISTRY-}basketapi
+    build:
+      context: .
+      dockerfile: Services/Basket/Basket.Api/Dockerfile
 
