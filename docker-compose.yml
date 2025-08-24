@@ -7,6 +7,14 @@ services:
     container_name: basket.api
     image: redis:alpine
 
+  discountdb:
+    container_name: discountdb
+    image: postgres
+
+  pgadmin:
+    container_name: pgadmin
+    image: dpage/pgadmin4
+
   portainer:
     container_name: portainer
     image: portainer/portainer-ce
